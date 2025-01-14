@@ -1,3 +1,7 @@
+#### TO DO ####
+
+# CHANGE THE PATH OF THE TREETAGGER ON LINE 113 TO YOUR OWN DIRECTORY
+
 
 # Clear workspace
 rm(list = ls())
@@ -106,7 +110,7 @@ read_and_preprocess_data <- function(file_name, sheet_name, column_name, label, 
 
 # Define the lemmatize function
 lemmatize <- function(words) {
-  set.kRp.env(TT.cmd="manual", TT.options=list(path="\\\\ru.nl\\wrkgrp\\TeamIR\\Man_info\\TopicModeling\\NAE\\Syntax\\TreeTagger", preset='en', no.unknown=T), lang='en')
+  set.kRp.env(TT.cmd="manual", TT.options=list(path="", preset='en', no.unknown=T), lang='en')
   res <- treetag(
     file=words,
     treetagger="kRp.env",
