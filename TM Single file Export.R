@@ -2,6 +2,7 @@
 # Clear workspace
 rm(list = ls())
 options(warn = 1)  # Make all warnings into errors to catch them with tryCatch
+options(repos = c(CRAN = "https://cran.r-project.org"))
 
 # List of required packages
 packages <- c(
