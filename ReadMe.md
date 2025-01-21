@@ -2,10 +2,30 @@
 
 This tool is designed to perform topic modeling and other various text analysis on textual data using R for core analysis and a Python-based user interface (UI) built with the Tkinter library. It is particularly effective with long textual responses and provides visual aids through word clouds for shorter surveys.
 
+# Very quick steps
+```
+python setup_env.py
+venv\Scripts\activate
+python topic_modeling_app.py
+```
+
 # Quick steps
   1. First, run the following script: setup_env.py
   2. Second, activate your virtual environment with the following command: venv\Scripts\activate
   3. Third, run the last script: topic_modeling_app.py
+
+# Execution Policy Issues?
+Are you running to any issues regarding Execution Policy? You can temporarily bypass the restriction for the current PowerShell session by running the following command in your terminal: 
+
+```
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+Afterwards, try activating the virtual environment again: 
+
+```
+venv\Scripts\activate
+```
 
 ## Features
 
