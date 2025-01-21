@@ -1,11 +1,7 @@
 datetime
-tkinter; platform_system == "Windows"
 matplotlib
 seaborn
 wordcloud
 pillow
 pandas
-base64
-threading; platform_system == "Windows"
-re
-winreg; platform_system == "Windows"
+openpyxl

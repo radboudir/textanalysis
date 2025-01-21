@@ -1,13 +1,19 @@
 # Topic Modeling Tool
 
-This tool is designed to perform topic modeling on textual data using R for core analysis and a Python-based user interface (UI) built with the Tkinter library. It is particularly effective with long textual responses and provides visual aids through word clouds for shorter surveys.
+This tool is designed to perform topic modeling and other various text analysis on textual data using R for core analysis and a Python-based user interface (UI) built with the Tkinter library. It is particularly effective with long textual responses and provides visual aids through word clouds for shorter surveys.
+
+# Quick steps
+  1. First, run the following script: setup_env.py
+  2. Second, activate your virtual environment with the following command: venv\Scripts\activate
+  3. Third, run the last script: topic_modeling_app.py
 
 ## Features
 
 - **Topic Modeling:** Ideal for analyzing extensive text data.
 - **Word Cloud:** Visualizes the most frequent terms in datasets, best suited for shorter surveys.
+- **More to follow**
 
-## Prerequisites
+## Further prerequisites
 
 Before using this tool, please ensure the following steps are completed to set up your environment:
 
@@ -37,5 +43,5 @@ Before using this tool, please ensure the following steps are completed to set u
 
 ## Getting Help
 
-If you encounter any issues or need further assistance, please feel free to contact ali.lowni@ru.nl
+If you encounter any issues or need further assistance, please feel free to contact amir.khodaie@ru.nl
 

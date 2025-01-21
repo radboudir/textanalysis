@@ -1,3 +1,10 @@
+import os
+import subprocess
+
+# Run the setup_env.py script
+print("Setting up virtual environment...")
+subprocess.check_call([os.sys.executable, "setup_env.py"])
+
 # ---------------------------------------
 # config section
 # ---------------------------------------
