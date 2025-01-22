@@ -11,14 +11,16 @@ options(warn = 1)  # Make all warnings into errors to catch them with tryCatch
 packages <- c(
   "jsonlite", "readxl", "tidyverse", "cld3", "base64enc", "knitr" ,
   "tidytext", "topicmodels", "tm", "koRpus", "ldatuning",
-  "openxlsx", "koRpus.lang.en", "koRpus.lang.nl"
+  "openxlsx", "devtools"
 )
 
 # Function to install and load packages
 install_and_load <- function(pkg) {
   suppressWarnings(suppressMessages({
     if (!require(pkg, character.only = TRUE)) {
-      install.packages(pkg, dependencies = TRUE)
+      install.packages(pkg, dependencies = TRUE, repos='http://cran.us.r-project.org')
+      devtools::install("unDocUMeantIt/koRpus.lang.en")
+      devtools::install("unDocUMeantIt/koRpus.lang.nl")
       library(pkg, character.only = TRUE)
     }
   }))
@@ -109,6 +111,9 @@ read_and_preprocess_data <- function(file_name, sheet_name, column_name, label, 
 
 
 # Define the lemmatize function
+
+#### TO DO ####
+#### unhardcode path
 lemmatize <- function(words) {
   set.kRp.env(TT.cmd="manual", TT.options=list(path="", preset='en', no.unknown=T), lang='en')
   res <- treetag(
@@ -118,7 +123,6 @@ lemmatize <- function(words) {
     stopwords = tm::stopwords('en'))
   
   tokens <- res@tokens
-  
   tokens <- transform(tokens, lemma = ifelse(stop == TRUE, "<stopword>", lemma))
   tokens$lemma <- gsub("\\|.*", "", tokens$lemma)
   
@@ -131,7 +135,7 @@ preprocess_text <- function(data,column_name,question_number, question_filter) {
   
   # Select data for the chosen question
   data_selection <- subset(data, qid %in% c(question_number))
-  
+
   # Detect language
   languages <- detect_language(data_selection[[column_name]])
   data_selection <- data_selection[languages == 'nl', ] %>% drop_na()
@@ -275,6 +279,7 @@ filterwords_file <- args[6]
 
 tryCatch({
   
+  message("Starting Topic Modeling Analysis")
   #cat("file_path_r:", working_directory, "\n")
   #cat(getwed())
   # cat("file_name:", file_name, "\n")
@@ -288,23 +293,36 @@ tryCatch({
   preprocess_result <- read_and_preprocess_data(file_name, sheet_name, column_name, label, question_number, filterwords_file)
   data <- preprocess_result$data
   question_filter <- preprocess_result$question_filter
+  message("Data read and preprocessed")
   
   # Step 2: Preprocess text and create document-term matrix
   text_preprocess_result <- preprocess_text(data, column_name, question_number, question_filter)
   dfm <- text_preprocess_result$dfm
   data_selection <- text_preprocess_result$data_selection
-  
+
+  message("Text preprocessed and document-term matrix created")  
+
+
   # Step 3: Determine optimal number of topics
   determine_optimal_topics(dfm)
   
+  message("Optimal number of topics determined")
   # Step 4: Fit the topic model
   TopicModel <- fit_topic_model(dfm, nr_of_topics)
   
+
+  message("Topic model fitted")
+
   # Step 5: Extract top terms per topic and plot
   top_terms <- extract_top_terms(TopicModel)
+
+  message("Top terms extracted")
+
   # Step 6: Generate document-topic probabilities and merge with data
   df_full <- generate_document_topic_probabilities(TopicModel, dfm, data_selection,column_name, nr_of_topics, top_terms)
-  
+
+
+  message("Document-topic probabilities generated and merged with data")
   #Specify the output file name
   #output_file <- paste0("output_topic_done_", label, ".xlsx")
   #Write the data frame to an Excel file
